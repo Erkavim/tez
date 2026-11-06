@@ -1,0 +1,18 @@
+name: CI
+on:
+  pull_request:
+    branches: [base-clean]
+  push:
+    branches: [vibe/tez-ajani-11d631]
+jobs:
+  python-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sözdizimi kontrolü
+        run: python3 -m py_compile arastirma_ajani.py
+      - name: Dosya varlık kontrolü
+        run: test -s degisiklikler.md && test -s kaynakca_guncelleme.bib && test -s arastirma_ajani.py
